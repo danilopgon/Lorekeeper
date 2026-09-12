@@ -1,0 +1,129 @@
+# 04 — Architecture
+
+## Architectural style
+
+The baseline is an **Angular 22 frontend** backed by an **ASP.NET Core modular monolith**. The backend is organised by functional modules and vertical slices, with Clean/Hexagonal boundaries inside each module where they protect real dependencies.
+
+CQRS means commands and queries have distinct use cases and models. It does not require MediatR or a class per line of code.
+
+## System overview
+
+```text
+Angular 22
+    ↓ generated OpenAPI client
+ASP.NET Core API
+    ↓
+Functional modules / vertical slices
+    ├── Domain
+    ├── Application
+    └── Infrastructure
+          ├── PostgreSQL / pgvector
+          └── external and AI providers
+```
+
+## Repository layout
+
+```text
+apps/web/
+├── src/app/
+│   ├── core/                 # app-wide infrastructure
+│   ├── shared/               # proven reusable UI primitives
+│   └── features/             # product capabilities
+└── e2e/
+
+services/api/
+├── src/
+│   ├── Api/                  # composition root, middleware, endpoints
+│   ├── Modules/
+│   │   └── [Module]/
+│   │       ├── Domain/
+│   │       ├── Application/
+│   │       │   └── Features/
+│   │       │       └── [UseCase]/
+│   │       └── Infrastructure/
+│   └── SharedKernel/         # genuinely transversal primitives only
+└── tests/
+    ├── Unit/
+    └── Integration/
+
+tests/
+├── contracts/
+├── e2e/
+└── evals/
+```
+
+## Backend module rules
+
+- A module owns its domain rules, use cases, persistence mapping and adapters.
+- Modules communicate through explicit contracts, not another module's EF entities.
+- Domain and Application do not depend on EF Core, ASP.NET or provider SDKs.
+- Infrastructure implements ports defined by the owning module.
+- Endpoints translate HTTP into commands/queries and map results into public contracts.
+- Use project-owned ports for time, IDs, storage and providers when the boundary matters; do not wrap every framework API by reflex.
+
+## Pragmatic CQRS
+
+```text
+Command → Handler → Domain change → Unit of Work
+Query   → Handler → Read model / projection
+```
+
+- Commands express intent and enforce invariants.
+- Queries can use purpose-built projections and need not hydrate aggregates.
+- A feature folder owns request, result, validation, handler and tests.
+- Add a mediator library only through an ADR with a demonstrated benefit.
+
+## Angular rules
+
+- Standalone components and lazy feature routes.
+- Signals for local synchronous state; `computed` for derived state.
+- `resource`/`httpResource` for remote state when the API and lifecycle fit.
+- Zoneless change detection and `OnPush`-compatible patterns.
+- Domain components before generic abstractions.
+- Generated OpenAPI client at the transport boundary; map DTOs when the UI needs its own model.
+- Semantic HTML, Angular ARIA or CDK for behaviour that native HTML cannot provide cleanly.
+
+## Contract flow
+
+```text
+ASP.NET endpoint contracts
+        ↓ OpenAPI
+generated TypeScript client
+        ↓ adapter / facade
+Angular feature model
+```
+
+The generated client is never edited manually. CI fails when a contract change leaves generated code stale.
+
+## AI and retrieval boundary
+
+```text
+Application use case
+    ↓ project-owned ports
+IChatModel / IEmbeddingGenerator / IReranker
+    ↓ Infrastructure adapters
+Microsoft.Extensions.AI / provider HTTP API
+```
+
+Angular never receives provider credentials and never calls providers directly. Retrieval, context construction, validation, cost controls and audit metadata belong in the backend.
+
+## Data
+
+- PostgreSQL is the system of record.
+- EF Core owns transactional persistence and migrations.
+- Full-text search and pgvector may use SQL/Npgsql projections where EF adds friction.
+- Migrations are forward-compatible during rollout and reviewed as production code.
+- Integration tests run against real PostgreSQL with Testcontainers, not an in-memory substitute.
+
+## Cross-cutting concerns
+
+ASP.NET Problem Details, structured logging, request correlation, OpenTelemetry, health checks, timeouts, resilience, caching and rate limits are configured centrally but applied according to each capability.
+
+## Explicit non-goals
+
+- No microservices without an independently deployable need.
+- No generic repository over EF Core.
+- No service locator or framework types inside Domain.
+- No speculative shared library.
+- No direct SDK calls from handlers or Angular.
+
