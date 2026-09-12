@@ -17,3 +17,8 @@ Deferred means **not part of the active roadmap**. Do not scaffold it.
 ## Rejected ideas
 
 Rejected architecture links to an ADR. Rejected product ideas stay here with a concise rationale.
+
+
+## Explicit initial non-goals
+
+Accounts, teams, invitations, shared roles/permissions, cross-campaign retrieval and automatic canon modification are outside the personal PoC. Multiuser support requires a fresh scope and ownership/authentication ADR. Application login is deferred pending deployment access design; control of remote access itself is mandatory before exposure.

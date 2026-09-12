@@ -45,3 +45,10 @@ ASP.NET endpoint contracts generate OpenAPI. Angular consumes a generated TypeSc
 ## External integrations
 
 Document provider contract, timeout, retry, mapping and fallback. Provider responses are not domain models.
+
+
+## Campaign contract requirements
+
+Campaign-dependent requests carry an explicit `campaignId` in the agreed route or request contract. No implicit campaign fallback. Validate that nested source/document IDs belong to that campaign for reads and writes. A campaign identifier is not an authentication credential.
+
+Define the first slice's endpoint/DTO/error contracts before block 01 implementation; block 02 automates generation, it does not postpone contract design. Decide synchronous versus job-based ingestion before block 04 and full-response versus streaming contracts before block 06.

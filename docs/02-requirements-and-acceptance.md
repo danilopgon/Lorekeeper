@@ -26,3 +26,28 @@
 
 - [Test level and evidence.]
 
+
+
+## Accepted baseline requirements
+
+### LK-01 — Select a campaign
+
+Given multiple campaigns, when the operator starts ingestion or a query, an explicit campaign must be selected. Missing, invalid or unknown campaign identifiers fail validation without defaulting to another campaign. Exact HTTP mapping is defined before the slice implementing it.
+
+### LK-02 — Isolate evidence
+
+Given two campaigns with overlapping NPC names, querying campaign A returns only A's chunks and citations. Campaign filtering applies to lexical and vector candidate retrieval before ranking. Reranking, context construction, caches and source resolution retain the same scope.
+
+Verification: integration test with real PostgreSQL/pgvector and overlapping-name fixtures; assert no campaign B content or source identifiers appear.
+
+### LK-03 — Isolate mutations
+
+Ingesting, reindexing or deleting a source in campaign A cannot modify campaign B. A source/document reference from another campaign is rejected. Verify database constraints and application checks with integration tests.
+
+### LK-04 — Personal access boundary
+
+Local development needs no application login. Before Internet exposure, unauthorised access to both UI and API must be denied by the selected application or external access layer; direct-origin bypass must also be prevented and tested.
+
+### Requirements before implementation
+
+Each slice needs concrete input/output, validation, failure/recovery and relevant UI states plus verification evidence. The story template above is not a ready story. Knowledge-status and source-backed generation acceptance criteria must be resolved at the roadmap gates before those behaviours are implemented.

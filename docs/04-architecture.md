@@ -127,3 +127,10 @@ ASP.NET Problem Details, structured logging, request correlation, OpenTelemetry,
 - No speculative shared library.
 - No direct SDK calls from handlers or Angular.
 
+
+
+## Personal multicampaign deployment
+
+The initial system is single-operator, not multiuser. Campaign boundaries are enforced in application use cases and database relationships; no account or tenant subsystem is required. Scope lexical/vector candidates by campaign before fusion. Include campaign scope in cache keys, jobs, citations and mutations. Any future multiuser design requires a new ownership/authentication decision; `campaignId` alone is not authorization.
+
+Application login is not a scaffold prerequisite. Remote exposure is subject to the access gate in `07-data-security-and-rls.md`.

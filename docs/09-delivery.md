@@ -58,3 +58,10 @@ AI and external providers
 
 Define the last known-good artifact, database compatibility window, feature-flag behaviour and how provider/config changes are reversed.
 
+
+
+## Initial personal deployment and readiness
+
+The initial installation serves one operator and several campaigns. Local-only development is permitted without application login. Hosting and application-auth versus external private-access enforcement remain **Open**; they must be settled before Internet exposure, even if a preview is attempted before block 08.
+
+Record chosen host, network/origin restrictions, access mechanism, secrets, storage/backups and authorised/unauthorised smoke evidence here and in an ADR. Protect both frontend and API, including direct-origin paths. Until verified, keep the deployment local-only. This deployment gate does not block local product development.

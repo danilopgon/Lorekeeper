@@ -8,9 +8,9 @@ Before implementing product features, read `PRODUCT.md`, `DESIGN.md` and `docs/R
 
 ## Project Summary
 
-Lorekeeper helps [primary user] to [core job] so that [valuable outcome].
+Lorekeeper helps its operator recover campaign knowledge from notes with source-backed answers.
 
-[Explain the central product principle: what the software does, what it never decides automatically, and who keeps final control.]
+The GM retains control over campaign canon; retrieved preparation is not automatically an event that happened.
 
 ---
 
@@ -142,3 +142,12 @@ Every operation on private data must verify authorization server-side. Hiding UI
 ### Prefer self-documenting code
 
 Reach for a better name, smaller function, typed boundary or test name before a narrative comment.
+
+
+## SDD readiness is a blocking gate
+
+Before starting any implementation block, apply the Definition of Ready in `docs/08-quality-strategy.md` and its entry criteria in `docs/10-roadmap.md`. An unresolved decision required by that block means **Blocked**: record the question, affected document and unblock condition. Do not invent product decisions from placeholders. Independent ready work may proceed. Update specifications before implementation when behaviour changes.
+
+The current release is a personal, single-operator installation supporting multiple campaigns. All campaign data and retrieval are explicitly scoped by `campaignId`. This is data isolation, not authentication. Do not scaffold accounts, teams, invitations or multiuser permissions. Local development may proceed without application login; exposing UI or API on the Internet is blocked until application authentication or private-access enforcement is selected and verified. See `docs/07-data-security-and-rls.md`.
+
+Command tables describe the planned scaffold until block 00 establishes and verifies executable commands. A placeholder never counts as a completed specification.

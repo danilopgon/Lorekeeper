@@ -1,25 +1,24 @@
 # 01 — Current Scope
 
-## Goal of the current release
+## Release goal
 
-[One end-to-end outcome.]
+Demonstrate source-backed campaign recall over the operator's notes, with multiple campaigns isolated within one personal installation.
 
 ## Included
 
-- [Capability.]
-- [Required supporting behavior.]
+- Explicit campaign selection and campaign-scoped ingestion and queries.
+- Notion as the initial source; canonical documents, chunks and traceable citations.
+- PostgreSQL lexical/vector retrieval, RRF and evaluated answer generation.
+- Repeatable evaluation fixtures and campaign-isolation checks.
 
-## Explicitly out of scope
+## Excluded
 
-- [Deferred capability. Do not scaffold it.]
-- [Intentional non-goal.]
+Accounts, teams, invitations, multiuser permissions, cross-campaign search, automatic canon updates and public anonymous access to private campaign data. Reranking remains conditional on evaluation; extra authoring/session-preparation features require a scope decision.
 
-## Constraints
+## Open decisions
 
-- [Technical/business constraint.]
-- [Compatibility requirement.]
+Follow roadmap entry gates for exact first slice, source configuration, ingestion lifecycle, knowledge-status model, UI, provider settings and deployment access mechanism. Unknowns are not implementation permission.
 
-## Completion boundary
+## Completion
 
-The scope is complete when [observable result], including [critical states and verification].
-
+The agreed end-to-end flow passes documented acceptance criteria and eval gates; no cross-campaign evidence is returned. Any remotely exposed deployment passes the access-control gate in `07-data-security-and-rls.md`.

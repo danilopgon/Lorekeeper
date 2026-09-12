@@ -1,38 +1,22 @@
 # Lorekeeper — Product Source of Truth
 
-## 1. Product definition
+Lorekeeper is an AI-assisted campaign memory companion for Game Masters, initially a personal PoC for Dani and his campaigns. It recovers relevant notes and answers with sources as a Lazy Lands experiment.
 
-**Lorekeeper** is [what it is] for [primary user]. It helps them [core job] without [main pain or unacceptable trade-off].
+## Product principles
 
-## 2. Problem
+- Support multiple campaigns within one personal installation.
+- The operator selects a campaign before ingestion or querying; evidence never crosses campaign boundaries.
+- The GM controls canon. Preparation, events that happened and player knowledge are distinct; presence in a note does not prove players discovered it.
+- Missing evidence produces an explicit limitation rather than invented facts.
 
-[Describe the real situation, why current alternatives fail and why it matters.]
+## Core flow
 
-## 3. Product principle
+Select a campaign → ingest its configured notes → inspect ingestion outcome → ask within that campaign → review an answer and its sources.
 
-> [Short rule that settles ambiguous product decisions.]
+Exact screen design, API schemas, knowledge-status representation and generation acceptance criteria remain subject to their roadmap entry gates. This flow does not authorize additional features.
 
-The product does [responsibilities]. It does not [central non-goals]. The [user] keeps [final control].
+## Boundaries
 
-## 4. Core flow
+Personal use, multiple campaigns, no multiuser product in the initial release. Application login is deferred; access control must be resolved before Internet exposure. No accounts, teams, invitations, cross-campaign search or automatic canon changes.
 
-1. [User starts with...]
-2. [System...]
-3. [User reviews/decides...]
-4. [System produces...]
-5. [User reaches the valuable outcome.]
-
-## 5. Required states
-
-Every user-facing flow defines initial/empty, loading, success, validation error and recoverable system error states.
-
-## 6. Domain entities
-
-| Entity | Meaning | Owned by / related to |
-| --- | --- | --- |
-| `[Entity]` | `[definition]` | `[ownership]` |
-
-## 7. Current scope
-
-See `docs/01-scope.md`. This document owns product intent; the scope document owns the current delivery boundary.
-
+See [scope](docs/01-scope.md), [requirements](docs/02-requirements-and-acceptance.md) and [roadmap](docs/10-roadmap.md).

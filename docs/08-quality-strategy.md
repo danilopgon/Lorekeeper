@@ -115,3 +115,25 @@ Adapt script names to the repository, then replace this block. Do not leave fict
 - [ ] Documentation represents the resulting system.
 - [ ] Any unexecuted check or remaining risk is explicit.
 
+
+
+## Definition of Ready — blocking SDD gate
+
+A block may start only when:
+
+- Its outcome, included/excluded scope and dependencies are explicit.
+- Required product/domain decisions are resolved in the source-of-truth documents.
+- Acceptance criteria cover successful behaviour and relevant boundaries/failures.
+- Contracts and data invariants needed by the slice are specified.
+- Verification approach, fixtures and applicable checks are identified.
+- No placeholder or unresolved question remains on the block's critical path.
+
+Record readiness evidence in `10-roadmap.md`. If any required decision is unresolved, mark that block **Blocked**, list the missing decision, target document and unblock condition. Do not invent answers or silently skip gates. Unrelated ready blocks may proceed. Implementation changes to specified behaviour require updating the specification first.
+
+## Mandatory campaign-isolation evidence
+
+Use at least two campaigns with overlapping NPC names. Test retrieval/citations, invalid cross-campaign references and ingestion/reindex/removal boundaries against real persistence. Test cache isolation if caching is implemented. No user/account scaffolding is needed for these checks.
+
+## Evaluation sequencing
+
+Create fixed questions and expected sources before block 05. Measure lexical/vector baselines in 05 and fusion/reranking in 06. Block 07 consolidates measured regression thresholds; it is not the first evaluation activity. Live-provider variability must not be labelled deterministic.

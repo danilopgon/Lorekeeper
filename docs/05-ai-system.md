@@ -1,6 +1,6 @@
 # 05 — AI System
 
-Delete this document and remove its routes if the project has no AI capability. AI is not mandatory garnish.
+This document specifies Lorekeeper retrieval and generation. Open settings must be resolved at the relevant roadmap gate.
 
 ## Product capability
 
@@ -57,7 +57,7 @@ grounded response + sources
 
 ## Retrieval rules
 
-- Scope by tenant/owner before ranking.
+- Scope both lexical and vector candidates by explicit `campaignId` before ranking; the initial installation has one operator, not tenants.
 - Run lexical and semantic retrieval independently.
 - Fuse rankings with RRF; keep parameters explicit and testable.
 - Reranking is optional and provider-specific behind `IReranker`.
@@ -103,3 +103,15 @@ Retrieval evals are deterministic CI candidates. Model-graded generation evals r
 
 Capture provider/model, latency, token or character usage, retrieved source IDs, retry/fallback path and validation failures. Do not store raw private content unless explicitly required and protected.
 
+
+
+## Required decisions by block
+
+- **03:** NaN adapter configuration, supported chat/embedding models, dimensions, budgets, timeouts, retries and failure behaviour; verify compatibility before locking settings.
+- **04:** Notion root per campaign, supported block types, canonical schema, structural chunking limits, tables, source removal, idempotency and job lifecycle. Preserve knowledge status; unknown is not confirmed canon.
+- **Before 05:** fixed corpus and expected-source questions, including overlapping NPC names in different campaigns. Record baseline results before adding regression thresholds.
+- **05:** FTS language, vector representation/index compatibility, candidate limits and retrieval parameters.
+- **06:** RRF settings, reranker decision, context budget/truncation, citation schema, contradictory/insufficient evidence and response transport. Define whether any structured current-state context is in scope rather than assuming all Lazy Lands features exist here.
+- **07:** measured thresholds and tolerances; distinguish frozen reproducible fixtures from live-provider evals.
+
+Campaign identity is preserved through all stages; final citation resolution must not fetch another campaign's document.

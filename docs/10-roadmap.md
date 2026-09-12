@@ -1,43 +1,48 @@
 # 10 — Implementation Roadmap
 
-## Status legend
+## Status and execution rule
 
-`Not started` · `In progress` · `Blocked` · `Done`
+`Not started` · `In progress` · `Blocked` · `Done`.
+
+Apply the blocking Definition of Ready in `08-quality-strategy.md` before every block. Dependencies are necessary but not sufficient: resolve the entry decisions below in their owning documents. Record evidence and status here before coding. Unknowns on another block's path do not block independent ready work.
 
 ## Current block
 
-**Block NN — [Name]**  
-**Status:** [status]  
-**Outcome:** [vertical, demonstrable result]
+**Definition — product and first-slice specification**  
+**Status:** Not started  
+**Outcome:** an implementable first slice with explicit scope and acceptance criteria.
 
-### Included
+Accepted: personal single-operator use, multiple isolated campaigns, no multiuser scaffolding, access control required before Internet exposure. Still open: exact first slice, minimum campaign lifecycle/schema, screen design and concrete contracts. Implementation is blocked wherever those decisions are required.
 
-- [work unit];
-- [work unit].
+## Blocks and gates
 
-### Exit criteria
+| Block | Outcome / dependency | Required decisions before implementation | Exit evidence |
+| --- | --- | --- | --- |
+| Definition | Product and scope / none | Personal multicampaign boundaries, first slice, non-goals and observable acceptance in PRODUCT, 00–03 | First slice passes Definition of Ready; unresolved later decisions explicitly assigned |
+| 00 | Skeleton and CI / Definition | Runtime/package versions, package manager, module/project layout, one E2E location, real commands and CI tools in 04/08/09 | Scaffold builds; applicable checks run; AGENTS commands updated |
+| 01 | Angular → .NET → PostgreSQL slice / 00 | Campaign schema/invariants, explicit campaign selection, endpoint DTOs/errors, minimal UI states/tokens in 02/03/06/DESIGN | Accepted first flow and database isolation tests pass |
+| 02 | Generated OpenAPI client / 01 | Generator, output location/versioning and contract-diff policy in 06 | Client generation and contract gate run |
+| 03 | AI ports and deterministic fake / 01 | NaN adapter/model settings, dimensions, limits, failure policy in 05/09 | Fake verifies orchestration; configured adapter compatibility checked before live use |
+| 04 | Ingestion / 03 | Notion scope, canonical schema, knowledge status, chunking, jobs, idempotency, deletions and private-data policy in 03/05/06/07 | Campaign-scoped ingestion and isolation verified; fixed corpus and initial expected-source eval cases ready |
+| 05 | FTS + vector retrieval / 04 | FTS language, vector/index configuration and candidate limits; initial eval dataset exists | Separate lexical/vector baselines recorded; no campaign leakage |
+| 06 | Fusion and grounded answer / 05 | RRF/reranker decision, budgets, citations, contradictions, insufficient evidence, transport and generation criteria in 02/05/06 | Answers trace to campaign evidence; comparison against baselines recorded |
+| 07 | Regression gates / 06 | Measured thresholds/tolerances, frozen versus live eval execution in 08 | Repeatable gates with documented baseline and cost/variance policy |
+| 08 | Complete flow and deployment / 07 | Hosting, auth or private-access layer, backups, limits and rollback in 07/09 | Critical flow passes; any remote exposure passes access gate and smoke verification |
 
-- [observable result];
-- [quality gate];
-- [documentation update].
+All numbered blocks are **Not started**. Mark a block **Blocked** when readiness assessment identifies an unresolved required decision; document the exact condition below.
 
-## Blocks
+## Readiness record (required per block)
 
-| Block | Outcome | Depends on | Status |
-| ---: | --- | --- | --- |
-| 00 | Baseline, solution skeleton and CI | — | Not started |
-| 01 | First Angular → .NET → PostgreSQL vertical slice | 00 | Not started |
-| 02 | OpenAPI client generation and contract gate | 01 | Not started |
-| 03 | AI provider ports with deterministic fake | 01 | Not started |
-| 04 | Ingestion and canonical documents | 03 | Not started |
-| 05 | PostgreSQL FTS + pgvector retrieval | 04 | Not started |
-| 06 | RRF, optional reranking and context builder | 05 | Not started |
-| 07 | Versioned eval dataset and regression gates | 06 | Not started |
-| 08 | End-to-end product flow and production hardening | 07 | Not started |
+- Block and status:
+- Entry decisions and links to resolved specifications:
+- Remaining blocker, target document and unblock condition:
+- Acceptance criteria and verification plan:
+- Exit evidence and remaining limitations:
 
-## PR strategy
+## Cross-cutting gates
 
-```text
-PR 01 — [single coherent deliverable]
-PR 02 — [next slice]
-```
+- Any Internet exposure, including an early preview, requires verified control of both UI and API plus prevention of direct-origin bypass. Resolve authentication or external private access then, not necessarily during scaffold work.
+- Campaign boundaries are enforced from the first persistence slice onward.
+- Preparation, actual events and player knowledge must be modelled before ingestion; a DM note is not proof of player discovery.
+- Evaluation starts before retrieval implementation; block 07 formalises gates.
+- Each PR identifies its block, specification and acceptance evidence. No feature may rely on a placeholder as an approved decision.
