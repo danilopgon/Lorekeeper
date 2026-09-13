@@ -51,3 +51,7 @@ Local development needs no application login. Before Internet exposure, unauthor
 ### Requirements before implementation
 
 Each slice needs concrete input/output, validation, failure/recovery and relevant UI states plus verification evidence. The story template above is not a ready story. Knowledge-status and source-backed generation acceptance criteria must be resolved at the roadmap gates before those behaviours are implemented.
+
+## Initial workspace/ingestion approach
+
+Expand the acceptance scenarios in [workspace and ingestion UX](12-workspace-and-ingestion-ux.md) into slice requirements before implementation: campaign switching and late responses, import validation/partial failures, update preservation, removal and historical citations. These supplement LK-01–04; unresolved contracts remain blocking for the affected slice.

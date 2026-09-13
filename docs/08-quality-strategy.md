@@ -137,3 +137,7 @@ Use at least two campaigns with overlapping NPC names. Test retrieval/citations,
 ## Evaluation sequencing
 
 Create fixed questions and expected sources before block 05. Measure lexical/vector baselines in 05 and fusion/reranking in 06. Block 07 consolidates measured regression thresholds; it is not the first evaluation activity. Live-provider variability must not be labelled deterministic.
+
+## Initial workspace/ingestion approach
+
+Add behavioural verification for campaign switches with late asynchronous responses, partial import failure and retry idempotency, atomic source replacement, failed-update preservation and removal/citation behaviour. Use the [UX scenarios](12-workspace-and-ingestion-ux.md) at the cheapest meaningful layer; cover critical complete flows with Playwright.

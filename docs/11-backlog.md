@@ -22,3 +22,7 @@ Rejected architecture links to an ADR. Rejected product ideas stay here with a c
 ## Explicit initial non-goals
 
 Accounts, teams, invitations, shared roles/permissions, cross-campaign retrieval and automatic canon modification are outside the personal PoC. Multiuser support requires a fresh scope and ownership/authentication ADR. Application login is deferred pending deployment access design; control of remote access itself is mandatory before exposure.
+
+## Initial workspace/ingestion approach
+
+PDF, DOCX and ZIP import are deferred beyond the first ingestion approach. Revisit when real sources require them; define extraction quality and format limits before implementation. Initial formats are Markdown, plain text and pasted text, then Notion.

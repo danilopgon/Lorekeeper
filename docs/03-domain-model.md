@@ -44,3 +44,7 @@
 ## Open domain decisions
 
 Before block 01: minimal campaign fields, lifecycle and first-slice invariants. Before block 04: source/document/chunk schema, IDs and how preparation, actual events and player knowledge are represented, including unknown status. Never infer player discovery merely from a DM note. Before block 06: handling contradictory evidence and temporal questions.
+
+## Initial workspace/ingestion approach
+
+Sources need explicit replacement/version semantics: old content remains available during an update and is replaced only after full successful publication. Define source identity, version lifecycle, retention and citation references before those behaviours are implemented. Optional content category is separate from knowledge status. See [UX approach](12-workspace-and-ingestion-ux.md).

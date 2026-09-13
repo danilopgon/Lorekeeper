@@ -38,3 +38,6 @@ Semantic HTML first; full keyboard flow; visible focus; sufficient contrast; red
 
 Before implementing a screen, inspect this document and the nearest shipped screen. Extract a checklist of fields, copy, states, layout, tokens, shared components and motion. Compare the result against it before completion.
 
+## Accepted information architecture
+
+The initial workspace has a persistent/accessibly reachable campaign selector and Chat / Sources navigation. Sources provides import review, per-document progress and source management; Chat opens cited fragments. See [initial UX approach](docs/12-workspace-and-ingestion-ux.md). Visual thesis, tokens and detailed components above remain to be specified before their UI slices; this flow does not establish a finished design system.

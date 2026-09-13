@@ -151,3 +151,7 @@ Before starting any implementation block, apply the Definition of Ready in `docs
 The current release is a personal, single-operator installation supporting multiple campaigns. All campaign data and retrieval are explicitly scoped by `campaignId`. This is data isolation, not authentication. Do not scaffold accounts, teams, invitations or multiuser permissions. Local development may proceed without application login; exposing UI or API on the Internet is blocked until application authentication or private-access enforcement is selected and verified. See `docs/07-data-security-and-rls.md`.
 
 Command tables describe the planned scaffold until block 00 establishes and verifies executable commands. A placeholder never counts as a completed specification.
+
+## Workspace and ingestion routing
+
+For campaign navigation, Chat, Sources, uploads, pasted text, Notion import or source lifecycle, read `docs/12-workspace-and-ingestion-ux.md` alongside PRODUCT.md and the relevant contracts/domain/roadmap routes. It is an accepted first approach with unresolved detailed decisions, not a waiver of SDD readiness gates.

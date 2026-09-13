@@ -23,8 +23,9 @@ Accepted: personal single-operator use, multiple isolated campaigns, no multiuse
 | 01 | Angular → .NET → PostgreSQL slice / 00 | Campaign schema/invariants, explicit campaign selection, endpoint DTOs/errors, minimal UI states/tokens in 02/03/06/DESIGN | Accepted first flow and database isolation tests pass |
 | 02 | Generated OpenAPI client / 01 | Generator, output location/versioning and contract-diff policy in 06 | Client generation and contract gate run |
 | 03 | AI ports and deterministic fake / 01 | NaN adapter/model settings, dimensions, limits, failure policy in 05/09 | Fake verifies orchestration; configured adapter compatibility checked before live use |
-| 04 | Ingestion / 03 | Notion scope, canonical schema, knowledge status, chunking, jobs, idempotency, deletions and private-data policy in 03/05/06/07 | Campaign-scoped ingestion and isolation verified; fixed corpus and initial expected-source eval cases ready |
-| 05 | FTS + vector retrieval / 04 | FTS language, vector/index configuration and candidate limits; initial eval dataset exists | Separate lexical/vector baselines recorded; no campaign leakage |
+| 04A | Sources: Markdown/text and pasted text / 03 | Upload/review limits, canonical schema, knowledge status, chunking, progress/retry, identity/version publication, removal and private-data policy in 02/03/05/06/07/12 | Supported inputs available per campaign; partial failure/update/isolation verified; initial eval fixtures ready |
+| 04B | Notion ingestion / 04A | Root/credentials, traversal, supported blocks, sync and remote deletion in 03/05/06/07/12 | Notion uses the same canonical pipeline and source lifecycle; campaign isolation verified |
+| 05 | FTS + vector retrieval / 04B | FTS language, vector/index configuration and candidate limits; initial eval dataset exists | Separate lexical/vector baselines recorded; no campaign leakage |
 | 06 | Fusion and grounded answer / 05 | RRF/reranker decision, budgets, citations, contradictions, insufficient evidence, transport and generation criteria in 02/05/06 | Answers trace to campaign evidence; comparison against baselines recorded |
 | 07 | Regression gates / 06 | Measured thresholds/tolerances, frozen versus live eval execution in 08 | Repeatable gates with documented baseline and cost/variance policy |
 | 08 | Complete flow and deployment / 07 | Hosting, auth or private-access layer, backups, limits and rollback in 07/09 | Critical flow passes; any remote exposure passes access gate and smoke verification |
@@ -46,3 +47,7 @@ All numbered blocks are **Not started**. Mark a block **Blocked** when readiness
 - Preparation, actual events and player knowledge must be modelled before ingestion; a DM note is not proof of player discovery.
 - Evaluation starts before retrieval implementation; block 07 formalises gates.
 - Each PR identifies its block, specification and acceptance evidence. No feature may rely on a placeholder as an approved decision.
+
+## First UX approach: sequencing clarification
+
+[Workspace and ingestion UX](12-workspace-and-ingestion-ux.md) assigns campaign creation/selection and navigation to 01, Sources/file-text import to 04A, Notion to 04B, and Chat/citations to 06. Define the navigation/states before the corresponding UI work. Source publication/progress contracts are specified in 04A; vector indexing is completed with 05, so an intermediate parser/storage milestone must not claim production retrieval readiness. End-to-end source availability is verified once indexing exists. This decomposition preserves the existing gates and does not mark blocks ready.

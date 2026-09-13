@@ -20,3 +20,7 @@ Exact screen design, API schemas, knowledge-status representation and generation
 Personal use, multiple campaigns, no multiuser product in the initial release. Application login is deferred; access control must be resolved before Internet exposure. No accounts, teams, invitations, cross-campaign search or automatic canon changes.
 
 See [scope](docs/01-scope.md), [requirements](docs/02-requirements-and-acceptance.md) and [roadmap](docs/10-roadmap.md).
+
+## Initial workspace approach
+
+The selected campaign contains Chat and Sources, with campaign selection/creation accessible from navigation. Sources owns ingestion, progress, updates and removal; Chat consumes available evidence and opens citations. First ingestion supports multiple Markdown/text files and pasted text, followed by Notion. See [workspace and ingestion UX](docs/12-workspace-and-ingestion-ux.md) for the accepted first approach and unresolved slice decisions.

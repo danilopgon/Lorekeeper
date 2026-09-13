@@ -45,3 +45,7 @@ The goal is to make the product understandable and executable for both humans an
 ## Product principle
 
 Lorekeeper does not [central non-goal]. It [three verbs describing its role]. The [user] keeps [final control].
+
+## Workspace and ingestion
+
+- [12 — Workspace and Ingestion UX: First Approach](12-workspace-and-ingestion-ux.md): campaign navigation, Chat/Sources, entry formats, import review/progress, updates/removal and implementation gates.

@@ -115,3 +115,7 @@ Capture provider/model, latency, token or character usage, retrieved source IDs,
 - **07:** measured thresholds and tolerances; distinguish frozen reproducible fixtures from live-provider evals.
 
 Campaign identity is preserved through all stages; final citation resolution must not fetch another campaign's document.
+
+## Initial workspace/ingestion approach
+
+Entry adapters now start with Markdown/text files and pasted text (04A), followed by Notion (04B). Both feed the canonical pipeline. Retrieval uses only published available source versions; failed/pending updates preserve the previous usable version. See [UX approach](12-workspace-and-ingestion-ux.md); define atomic publication and deletion races before implementation.
