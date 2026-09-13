@@ -55,3 +55,7 @@ Each slice needs concrete input/output, validation, failure/recovery and relevan
 ## Initial workspace/ingestion approach
 
 Expand the acceptance scenarios in [workspace and ingestion UX](12-workspace-and-ingestion-ux.md) into slice requirements before implementation: campaign switching and late responses, import validation/partial failures, update preservation, removal and historical citations. These supplement LK-01–04; unresolved contracts remain blocking for the affected slice.
+
+## Design/evidence acceptance additions
+
+Answers must not render canonical-fact or knowledge-asymmetry claims without supporting source evidence. Missing source mentions do not establish player ignorance. Citation locators must map to actual source locations, with title/heading/fragment fallback. Verify keyboard interaction, focus, readable responsive layout and real colour contrast for each implemented screen against DESIGN.md.

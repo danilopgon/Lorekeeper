@@ -51,3 +51,7 @@ All numbered blocks are **Not started**. Mark a block **Blocked** when readiness
 ## First UX approach: sequencing clarification
 
 [Workspace and ingestion UX](12-workspace-and-ingestion-ux.md) assigns campaign creation/selection and navigation to 01, Sources/file-text import to 04A, Notion to 04B, and Chat/citations to 06. Define the navigation/states before the corresponding UI work. Source publication/progress contracts are specified in 04A; vector indexing is completed with 05, so an intermediate parser/storage milestone must not claim production retrieval readiness. End-to-end source availability is verified once indexing exists. This decomposition preserves the existing gates and does not mark blocks ready.
+
+## Design decision resolved
+
+Codex Lithographica is adopted in [DESIGN.md](../DESIGN.md), including conditional evidence blocks, real citation locators, responsive and accessibility requirements. The visual-direction decision is resolved; detailed screen/component specifications and verified accessible token combinations remain block 01 / affected-UI entry requirements. This documentation update does not mark implementation blocks complete.

@@ -119,3 +119,7 @@ Campaign identity is preserved through all stages; final citation resolution mus
 ## Initial workspace/ingestion approach
 
 Entry adapters now start with Markdown/text files and pasted text (04A), followed by Notion (04B). Both feed the canonical pipeline. Retrieval uses only published available source versions; failed/pending updates preserve the previous usable version. See [UX approach](12-workspace-and-ingestion-ux.md); define atomic publication and deletion races before implementation.
+
+## Evidence presentation contract
+
+The adopted design uses conditional canonical-fact, knowledge-asymmetry and information-limit blocks. Show canon or player/GM knowledge differences only when sources support them. Missing mentions do not prove ignorance. Never invent line/folio locators; emit only traceable source locations. Define the precise output schema before block 06; no mandatory three-part answer is implied.

@@ -79,3 +79,7 @@ Before **06**: conversation persistence/reset policy, draft handling, response t
 **08:** complete-flow verification and deployment access gate.
 
 Plan both sections and their states early; implement behaviour only in its ready block. This first approach does not mark any implementation block ready or complete.
+
+## Adopted visual system
+
+[DESIGN.md](../DESIGN.md) adopts Codex Lithographica. Canonical-fact and table-knowledge blocks are conditional on explicit evidence, not mandatory answer sections. Citation lines/folios must be real traceable locators; otherwise use the source title, heading and fragment. Existing workspace, responsive, accessible interaction and lifecycle rules remain applicable.
