@@ -46,11 +46,18 @@ services/api/
     ├── Unit/
     └── Integration/
 
+ai/                           # optional offline AI engineering workbench
+├── experiments/              # retrieval/model comparisons and benchmarks
+├── tools/                    # dataset and analysis utilities
+└── tests/                    # Python-only tooling tests when needed
+
 tests/
 ├── contracts/
 ├── e2e/
 └── evals/
 ```
+
+The `ai/` workbench is not an application runtime boundary by default. Product orchestration, retrieval policy and production contracts remain owned by the ASP.NET Core application. Introduce a separately deployed Python/model service only after a measured need and an ADR justify the operational boundary.
 
 ## Backend module rules
 
@@ -102,10 +109,24 @@ Application use case
     ↓ project-owned ports
 IChatModel / IEmbeddingGenerator / IReranker
     ↓ Infrastructure adapters
-Microsoft.Extensions.AI / provider HTTP API
+Microsoft.Extensions.AI / provider HTTP API / measured local inference adapter
 ```
 
 Angular never receives provider credentials and never calls providers directly. Retrieval, context construction, validation, cost controls and audit metadata belong in the backend.
+
+A local model implementation may use Hugging Face / SentenceTransformers and PyTorch behind an existing port, especially for reranking experiments. Those libraries are implementation details, not architectural requirements. A local reranker is promoted from experiment to product only when evaluation shows a useful quality gain relative to latency, resource use and operational complexity.
+
+## AI experimentation workbench
+
+Python may be used for offline AI engineering tasks where the ecosystem is materially better suited than .NET, such as:
+
+- embedding and reranker comparisons;
+- dataset inspection and generation utilities;
+- latency/throughput benchmarks;
+- model loading, batching and inference experiments;
+- analysis of retrieval/evaluation results.
+
+If introduced, prefer a small modern toolchain such as `uv`, Pydantic and pytest. The workbench must consume the same committed fixtures and contracts as the product where practical; it must not become a parallel source of product truth or duplicate production orchestration.
 
 ## Data
 
@@ -122,12 +143,12 @@ ASP.NET Problem Details, structured logging, request correlation, OpenTelemetry,
 ## Explicit non-goals
 
 - No microservices without an independently deployable need.
+- No Python runtime service solely to adopt AI ecosystem tooling.
 - No generic repository over EF Core.
 - No service locator or framework types inside Domain.
 - No speculative shared library.
 - No direct SDK calls from handlers or Angular.
-
-
+- No training/fine-tuning pipeline without an evaluated product problem that requires it.
 
 ## Personal multicampaign deployment
 
