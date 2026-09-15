@@ -13,6 +13,8 @@ Lorekeeper is an AI-assisted campaign memory companion for Game Masters, initial
 
 Select a campaign → ingest its configured notes → inspect ingestion outcome → ask within that campaign → review an answer and its sources.
 
+The first implementation slice is narrower: create or select a campaign and enter an empty campaign workspace with Chat and Sources routes. It does not include ingestion, AI chat, retrieval, citations or campaign deletion.
+
 Exact screen design, API schemas, knowledge-status representation and generation acceptance criteria remain subject to their roadmap entry gates. This flow does not authorize additional features.
 
 ## Boundaries

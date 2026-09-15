@@ -4,29 +4,39 @@
 
 | ID | Story | Priority | Status |
 | --- | --- | --- | --- |
-| US-01 | [As a..., I want..., so that...] | Must | Planned |
+| US-01 | Create/select a campaign and enter an empty workspace shell | Must | Defined |
 
-## US-01 — [Short name]
+## US-01 — Campaign selection and empty workspace shell
 
-**As a** [user]  
-**I want** [capability]  
-**So that** [outcome]
+**As a** personal Game Master operator  
+**I want** to create or select a campaign and open its Chat or Sources workspace  
+**So that** all later notes and questions have an explicit campaign context before ingestion or AI is introduced.
 
 ### Acceptance criteria
 
-1. Given [context], when [action], then [observable result].
-2. Given [boundary/error], when [action], then [recovery or message].
-3. Loading, empty, error and success states are explicit.
+1. Given no campaigns exist, when the operator opens `/campaigns`, then the page shows an empty state with a campaign creation action and no Chat or Sources workspace is entered without a campaign.
+2. Given the operator creates a campaign with a valid name, when creation succeeds, then the campaign is persisted with `id`, trimmed `name`, `createdAt` and `updatedAt`, and the operator can navigate to `/campaigns/{campaignId}/chat` or `/campaigns/{campaignId}/sources`.
+3. Given the operator submits a campaign name, when it is empty after trimming, longer than 120 characters, or duplicates an existing campaign name case-insensitively, then creation is rejected with a field-level validation error and no campaign is created.
+4. Given one or more campaigns exist, when the operator opens `/campaigns`, then the page lists available campaigns and supports selecting one without defaulting future work to an implicit campaign.
+5. Given a selected campaign, when the operator opens `/campaigns/{campaignId}/chat`, then the Chat workspace shell renders for that campaign, contains no ingestion or AI query capability, and communicates that sources/AI are not available in this slice.
+6. Given a selected campaign, when the operator opens `/campaigns/{campaignId}/sources`, then the Sources workspace shell renders for that campaign, contains no upload, paste, import, update or removal actions, and communicates that ingestion is not available in this slice.
+7. Given an unknown or malformed `campaignId` in `/campaigns/{campaignId}/chat` or `/campaigns/{campaignId}/sources`, when the route is requested, then the UI/API reports a not-found or validation state without falling back to another campaign.
+8. Loading, empty, validation-error, not-found and success states are explicit for campaign creation, campaign selection and both workspace shell routes.
 
 ### Not included
 
-- [Nearby capability outside this story.]
+- Campaign deletion.
+- Source ingestion, upload, pasted text, Notion import, source update, source removal or indexing.
+- AI chat, retrieval, grounded answers, citations, conversation history or draft persistence.
+- Accounts, teams, invitations, multiuser permissions or Internet-exposure access control.
 
 ### Verification
 
-- [Test level and evidence.]
-
-
+- Domain/unit tests cover campaign name trimming, required/length validation and case-insensitive uniqueness.
+- Backend integration tests cover create/list/get campaign endpoints, unknown campaign lookup and duplicate-name persistence protection.
+- Frontend component or route tests cover `/campaigns`, `/campaigns/:campaignId/chat` and `/campaigns/:campaignId/sources` empty/loading/error/success states.
+- A focused E2E smoke test covers creating a campaign, selecting it and navigating to Chat and Sources shells.
+- No ingestion or AI commands/actions are exposed in this slice.
 
 ## Accepted baseline requirements
 
@@ -50,7 +60,7 @@ Local development needs no application login. Before Internet exposure, unauthor
 
 ### Requirements before implementation
 
-Each slice needs concrete input/output, validation, failure/recovery and relevant UI states plus verification evidence. The story template above is not a ready story. Knowledge-status and source-backed generation acceptance criteria must be resolved at the roadmap gates before those behaviours are implemented.
+Each slice needs concrete input/output, validation, failure/recovery and relevant UI states plus verification evidence. Knowledge-status and source-backed generation acceptance criteria must be resolved at the roadmap gates before those behaviours are implemented.
 
 ## Initial workspace/ingestion approach
 

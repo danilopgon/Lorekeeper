@@ -9,10 +9,12 @@ Apply the blocking Definition of Ready in `08-quality-strategy.md` before every 
 ## Current block
 
 **Definition — product and first-slice specification**  
-**Status:** Not started  
+**Status:** Done  
 **Outcome:** an implementable first slice with explicit scope and acceptance criteria.
 
-Accepted: personal single-operator use, multiple isolated campaigns, no multiuser scaffolding, access control required before Internet exposure. Still open: exact first slice, minimum campaign lifecycle/schema, screen design and concrete contracts. Implementation is blocked wherever those decisions are required.
+Accepted: personal single-operator use, multiple isolated campaigns, no multiuser scaffolding, access control required before Internet exposure. First slice: campaign creation/selection plus empty campaign workspace shell with Chat and Sources routes, without ingestion or AI. Minimal campaign fields are `id`, `name`, `createdAt` and `updatedAt`; `name` is required, trimmed, 1–120 characters and unique case-insensitively. Active campaign is represented in the URL: `/campaigns`, `/campaigns/{campaignId}/chat`, `/campaigns/{campaignId}/sources`. Campaign deletion is excluded from the first slice.
+
+Next block: 00 — Skeleton and CI. It remains Not started until runtime/package versions, package manager, project layout, real commands and CI/tooling choices are specified.
 
 ## Blocks and gates
 
@@ -48,11 +50,11 @@ OpenTelemetry remains the default system-wide observability stack. Langfuse or a
 
 ## Readiness record (required per block)
 
-- Block and status:
-- Entry decisions and links to resolved specifications:
-- Remaining blocker, target document and unblock condition:
-- Acceptance criteria and verification plan:
-- Exit evidence and remaining limitations:
+- Block and status: Definition — Done.
+- Entry decisions and links to resolved specifications: first implementation slice is campaign creation/selection plus empty Chat and Sources workspace shell (`PRODUCT`, `00`, `02`); Campaign fields and invariants are defined (`03`); first-slice campaign endpoints, DTOs and error mapping are defined (`06`); delete campaign, ingestion and AI are excluded from the slice (`PRODUCT`, `00`, `02`, `03`, `06`).
+- Remaining blocker, target document and unblock condition: no Definition blocker remains. Block 00 must still define runtime/package versions, package manager, module/project layout, one E2E location, real commands and CI tools in `04`, `08` and `09` before scaffold implementation.
+- Acceptance criteria and verification plan: US-01 in `02` defines creation, validation, URL campaign selection, Chat/Sources shells and excluded behaviours; verification covers domain/unit validation, backend integration, frontend route/component states and one E2E smoke test.
+- Exit evidence and remaining limitations: Documentation-only definition update; no scaffold, code, tests, generated client or implementation evidence exists yet. Numbered implementation blocks remain Not started.
 
 ## Cross-cutting gates
 
@@ -65,7 +67,7 @@ OpenTelemetry remains the default system-wide observability stack. Langfuse or a
 
 ## First UX approach: sequencing clarification
 
-[Workspace and ingestion UX](12-workspace-and-ingestion-ux.md) assigns campaign creation/selection and navigation to 01, Sources/file-text import to 04A, Notion to 04B, and Chat/citations to 06. Define the navigation/states before the corresponding UI work. Source publication/progress contracts are specified in 04A; vector indexing is completed with 05, so an intermediate parser/storage milestone must not claim production retrieval readiness. End-to-end source availability is verified once indexing exists. This decomposition preserves the existing gates and does not mark blocks ready.
+[Workspace and ingestion UX](12-workspace-and-ingestion-ux.md) assigns campaign creation/selection and navigation to 01, Sources/file-text import to 04A, Notion to 04B, and Chat/citations to 06. The first implementation slice narrows block 01 to campaign creation/selection and empty workspace shells only; no ingestion or AI capability is included. Define the navigation/states before the corresponding UI work. Source publication/progress contracts are specified in 04A; vector indexing is completed with 05, so an intermediate parser/storage milestone must not claim production retrieval readiness. End-to-end source availability is verified once indexing exists. This decomposition preserves the existing gates and does not mark blocks ready or complete.
 
 ## Design decision resolved
 
