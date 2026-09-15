@@ -18,6 +18,8 @@ Document variable names and purpose in `.env.example` or platform configuration.
 
 ## Deployment shape
 
+Baseline:
+
 ```text
 Angular static/SSR host
         ↓ HTTPS
@@ -28,6 +30,8 @@ PostgreSQL + pgvector
 AI and external providers
 ```
 
+A separate Python/model service is not part of the baseline. Add one only when a measured local inference requirement cannot be served cleanly inside the existing deployment and the extra operational boundary is justified by an ADR.
+
 ## Pipeline
 
 1. Restore/install from lockfiles.
@@ -35,9 +39,10 @@ AI and external providers
 3. Generate OpenAPI and verify the TypeScript client.
 4. Run integration tests against Testcontainers.
 5. Run deterministic AI evals and critical Playwright flows.
-6. Build immutable frontend/backend artifacts.
-7. Apply forward-compatible migrations.
-8. Deploy, verify health/readiness and execute smoke tests.
+6. Run applicable reproducible AI-workbench checks if that tooling exists and owns a changed capability.
+7. Build immutable frontend/backend artifacts.
+8. Apply forward-compatible migrations.
+9. Deploy, verify health/readiness and execute smoke tests.
 
 ## Database changes
 
@@ -48,17 +53,42 @@ AI and external providers
 
 ## Observability
 
-- OpenTelemetry traces across API, database and provider calls.
-- Structured logs with request/correlation ID.
-- Health checks distinguish liveness from readiness.
-- Domain metrics, retrieval latency, provider usage, validation failures and fallback rate.
-- Alerts must be actionable and point to a runbook.
+OpenTelemetry is the system-wide baseline:
+
+- traces across API, database and provider calls;
+- structured logs with request/correlation ID;
+- health checks that distinguish liveness from readiness;
+- domain metrics, retrieval latency, provider usage, validation failures and fallback rate;
+- actionable alerts that point to a runbook.
+
+An AI-focused observability platform such as Langfuse may complement this baseline for model/prompt traces, retrieval context, token/cost analysis and evaluation views. Do not duplicate sensitive content into a second telemetry store by default. Define redaction, retention and environment policy before enabling raw prompt/context capture.
+
+If local inference is promoted to production, additionally observe at least:
+
+- model/version and hardware/device;
+- batch size and queue time when applicable;
+- inference latency and error rate;
+- memory/resource pressure;
+- fallback behaviour to another implementation/provider.
+
+## AI experiment and model artefacts
+
+Offline Python tooling, Hugging Face models and benchmark outputs are development/evaluation concerns unless explicitly promoted to the runtime. Pin model identity/revision for reproducible experiments. Do not let a floating model download silently change a blocking baseline.
+
+Any promoted local model must define:
+
+- model source, revision and licence review;
+- immutable or reproducibly fetched artefact strategy;
+- expected storage/memory footprint;
+- startup/readiness behaviour;
+- rollback/fallback path;
+- benchmark evidence supporting the added operational cost.
 
 ## Rollback
 
 Define the last known-good artifact, database compatibility window, feature-flag behaviour and how provider/config changes are reversed.
 
-
+For AI changes, rollback must include model/provider configuration and any reranker/embedding implementation whose output can affect retrieval behaviour. Preserve compatibility with stored embedding dimensions when changing embedding models; reindexing must be explicit, observable and reversible at the application level where practical.
 
 ## Initial personal deployment and readiness
 
