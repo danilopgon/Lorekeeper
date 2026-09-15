@@ -8,15 +8,17 @@ Apply the blocking Definition of Ready in `08-quality-strategy.md` before every 
 
 ## Current block
 
-**00 — Skeleton and CI**
-**Status:** Ready / Not started
+**Block:** 00 — Skeleton and CI
+**Status:** Done
 **Outcome:** repository scaffold, executable local commands and CI gates for the first implementation slice.
 
 Definition remains Done: personal single-operator use, multiple isolated campaigns, no multiuser scaffolding, access control required before Internet exposure. First slice: campaign creation/selection plus empty campaign workspace shell with Chat and Sources routes, without ingestion or AI. Minimal campaign fields are `id`, `name`, `createdAt` and `updatedAt`; `name` is required, trimmed, 1–120 characters and unique case-insensitively. Active campaign is represented in the URL: `/campaigns`, `/campaigns/{campaignId}/chat`, `/campaigns/{campaignId}/sources`. Campaign deletion is excluded from the first slice.
 
-Block 00 readiness decisions are recorded in `04`, `08` and `09`: pnpm, Node 22 LTS, .NET 10, Angular 22, Tailwind aligned to `DESIGN.md`, GitHub Actions, Docker Compose PostgreSQL 17, Playwright E2E in `apps/web/e2e`, and Conventional Commits enforced through CI plus local hooks. Python/AI evaluation workbench remains planned for later and is not an active block 00 dependency or check.
+Block 00 readiness decisions are recorded in `04`, `08` and `09`: pnpm, Node 24.15+, .NET 10, Angular 22, Tailwind aligned to `DESIGN.md`, GitHub Actions, Docker Compose PostgreSQL 17, Playwright E2E in `apps/web/e2e`, and Conventional Commits enforced through CI plus local hooks. Python/AI evaluation workbench remains planned for later and is not an active block 00 dependency or check.
 
-Remaining blocker before scaffold implementation: none identified from the block 00 decision set. Commands are still planned, not verified, until scaffold files exist and checks run.
+Block 00 exit evidence: pnpm workspace, Angular 22/Tailwind frontend, Playwright in `apps/web/e2e`, .NET 10 API/test solution, Docker Compose PostgreSQL 17, GitHub Actions and Conventional Commit hooks are scaffolded. Local checks have passed for frontend format/lint/test/build/E2E, backend restore/format/build/test and commitlint.
+
+Next block: 01 — Angular → .NET → PostgreSQL slice. It remains Not started until its entry decisions are confirmed against `02`, `03`, `06` and `DESIGN.md`.
 
 ## Blocks and gates
 
@@ -34,7 +36,7 @@ Remaining blocker before scaffold implementation: none identified from the block
 | 07 | Regression gates / 06 | Measured thresholds/tolerances, frozen versus live eval execution in 08; decide whether Langfuse or equivalent adds material value beyond OpenTelemetry | Repeatable gates with documented baseline and cost/variance policy; AI observability choice and privacy policy recorded |
 | 08 | Complete flow and deployment / 07 | Hosting, auth or private-access layer, backups, limits and rollback in 07/09; any local-model runtime must have artefact/version/fallback/runbook decisions | Critical flow passes; any remote exposure passes access gate and smoke verification; promoted AI runtime dependencies are operationally reproducible |
 
-Block 00 is **Ready / Not started**. Blocks 01–08 are **Not started**. Mark a block **Blocked** when readiness assessment identifies an unresolved required decision; document the exact condition below.
+Block 00 is **Done**. Blocks 01–08 are **Not started**. Mark a block **Blocked** when readiness assessment identifies an unresolved required decision; document the exact condition below.
 
 ## AI engineering extension rule
 
@@ -58,11 +60,11 @@ OpenTelemetry remains the default system-wide observability stack. Langfuse or a
 - Acceptance criteria and verification plan: US-01 in `02` defines creation, validation, URL campaign selection, Chat/Sources shells and excluded behaviours; verification covers domain/unit validation, backend integration, frontend route/component states and one E2E smoke test.
 - Exit evidence and remaining limitations: Documentation-only definition update; no scaffold, code, tests, generated client or implementation evidence exists yet.
 
-- Block and status: 00 — Ready / Not started.
-- Entry decisions and links to resolved specifications: pnpm, Node 22 LTS, .NET 10, Tailwind, GitHub Actions, Docker Compose PostgreSQL 17, initial Playwright E2E location `apps/web/e2e`, Conventional Commits enforcement, and inactive Python/AI workbench are recorded in `04`, `08` and `09`.
-- Remaining blocker, target document and unblock condition: none identified before scaffold implementation. Internet exposure remains gated by `07`/`09`, but it does not block local scaffold work.
-- Acceptance criteria and verification plan: scaffold must create real frontend/backend/local database/CI command surfaces and then replace planned command references with verified commands; applicable checks must run and AGENTS commands must be updated from planned to verified.
-- Exit evidence and remaining limitations: Documentation-only readiness update; no scaffold, CI workflow, lockfile, hooks or executable verification exists yet.
+- Block and status: 00 — Done.
+- Entry decisions and links to resolved specifications: pnpm, Node 24.15+, .NET 10, Tailwind, GitHub Actions, Docker Compose PostgreSQL 17, initial Playwright E2E location `apps/web/e2e`, Conventional Commits enforcement, and inactive Python/AI workbench are recorded in `04`, `08` and `09`.
+- Remaining blocker, target document and unblock condition: none for block 00. Internet exposure remains gated by `07`/`09`, but it does not block local work.
+- Acceptance criteria and verification plan: scaffold creates real frontend/backend/local database/CI command surfaces; AGENTS commands are executable; applicable checks run locally.
+- Exit evidence and remaining limitations: `pnpm install`; `pnpm run format:check`; `pnpm run lint`; `pnpm run test`; `pnpm run build`; `pnpm run e2e`; `dotnet restore services/api/Lorekeeper.slnx`; `dotnet format services/api/Lorekeeper.slnx --verify-no-changes`; `dotnet build services/api/Lorekeeper.slnx --no-restore --configuration Release`; `dotnet test services/api/Lorekeeper.slnx --no-build --configuration Release`; commitlint smoke check. CI is configured but not observed remotely in this local evidence.
 
 ## Cross-cutting gates
 

@@ -48,16 +48,16 @@ Lorekeeper/
 
 | Command | What it does |
 | --- | --- |
-| `pnpm install --frozen-lockfile` | Install frontend dependencies from the lockfile once scaffolded |
-| `pnpm run start` | Start Angular locally once scaffolded |
-| `pnpm run build` | Build the Angular application once scaffolded |
-| `pnpm run lint` | Run Angular ESLint once scaffolded |
-| `pnpm run test` | Run frontend unit/component tests with Vitest once scaffolded |
-| `pnpm run e2e` | Run Playwright end-to-end tests once scaffolded |
-| `dotnet restore` | Restore backend dependencies once scaffolded |
-| `dotnet build --no-restore` | Build .NET with analyzers once scaffolded |
-| `dotnet test --no-build` | Run .NET unit and integration tests once scaffolded |
-| `dotnet format --verify-no-changes` | Verify .NET formatting once scaffolded |
+| `pnpm install --frozen-lockfile` | Install frontend dependencies from the lockfile |
+| `pnpm run start` | Start Angular locally |
+| `pnpm run build` | Build the Angular application |
+| `pnpm run lint` | Run Angular ESLint |
+| `pnpm run test` | Run frontend unit/component tests with Vitest |
+| `pnpm run e2e` | Run Playwright end-to-end tests |
+| `dotnet restore services/api/Lorekeeper.slnx` | Restore backend dependencies |
+| `dotnet build services/api/Lorekeeper.slnx --no-restore --configuration Release` | Build .NET with analyzers |
+| `dotnet test services/api/Lorekeeper.slnx --no-build --configuration Release` | Run .NET unit and integration tests |
+| `dotnet format services/api/Lorekeeper.slnx --verify-no-changes` | Verify .NET formatting |
 
 ---
 
@@ -150,7 +150,7 @@ Before starting any implementation block, apply the Definition of Ready in `docs
 
 The current release is a personal, single-operator installation supporting multiple campaigns. All campaign data and retrieval are explicitly scoped by `campaignId`. This is data isolation, not authentication. Do not scaffold accounts, teams, invitations or multiuser permissions. Local development may proceed without application login; exposing UI or API on the Internet is blocked until application authentication or private-access enforcement is selected and verified. See `docs/07-data-security-and-rls.md`.
 
-Command tables describe the planned scaffold until block 00 establishes and verifies executable commands. A placeholder never counts as a completed specification. Conventional Commits are expected once scaffolded, enforced by CI plus local hooks.
+Command tables must reflect verified scaffold commands. A placeholder never counts as a completed specification. Conventional Commits are enforced by CI plus local hooks.
 
 ## Workspace and ingestion routing
 

@@ -10,7 +10,7 @@
 
 ## Configuration
 
-Block 00 local development choices are pnpm, Node 22 LTS, .NET 10 and Docker Compose PostgreSQL 17. The local application remains local-only with no application login; Internet exposure is blocked until the access gate below is resolved. Python is not part of the block 00 runtime or delivery baseline.
+Block 00 local development choices are pnpm, Node 24.15+, .NET 10 and Docker Compose PostgreSQL 17. The local application remains local-only with no application login; Internet exposure is blocked until the access gate below is resolved. Python is not part of the block 00 runtime or delivery baseline.
 
 Document variable names and purpose in `.env.example` or platform configuration. Never commit real values.
 
@@ -36,7 +36,11 @@ A separate Python/model service is not part of the baseline. Add one only when a
 
 ## Pipeline
 
-CI runs on GitHub Actions. The block 00 scaffold should establish pnpm frontend installation, .NET 10 backend restore/build/test, and local database expectations around Docker Compose PostgreSQL 17.
+CI runs on GitHub Actions. The block 00 scaffold establishes pnpm frontend installation, .NET 10 backend restore/build/test, Playwright smoke coverage and local database expectations around Docker Compose PostgreSQL 17.
+
+## Branch and pull request policy
+
+After the block 00 scaffold is committed, protect `main` and use feature branches plus pull requests for subsequent slices. Required checks should include the GitHub Actions workflow and Conventional Commit validation before merging.
 
 1. Restore/install from lockfiles.
 2. Run format, lint, typecheck, build and unit tests.

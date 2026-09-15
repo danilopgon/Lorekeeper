@@ -20,7 +20,7 @@ Test behaviour at the cheapest layer that provides confidence. Most tests live b
 
 ### Angular 22
 
-- pnpm as the frontend package manager under Node 22 LTS.
+- pnpm as the frontend package manager under Node 24.15+.
 - Tailwind from block 00, aligned to the durable tokens and visual direction in `DESIGN.md`.
 - Vitest as the test runner.
 - Angular Testing Library for behaviour-first component tests.
@@ -109,7 +109,7 @@ Frontend:
 pnpm install --frozen-lockfile
 pnpm run format:check
 pnpm run lint
-pnpm run test -- --run
+pnpm run test
 pnpm run build
 
 Backend:

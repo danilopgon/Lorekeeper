@@ -2,7 +2,7 @@
 
 ## Architectural style
 
-The baseline is an **Angular 22 frontend** backed by an **ASP.NET Core modular monolith**. The block 00 scaffold targets pnpm, Node 22 LTS, .NET 10, GitHub Actions and Docker Compose for local PostgreSQL 17. The backend is organised by functional modules and vertical slices, with Clean/Hexagonal boundaries inside each module where they protect real dependencies.
+The baseline is an **Angular 22 frontend** backed by an **ASP.NET Core modular monolith**. The block 00 scaffold targets pnpm, Node 24.15+, .NET 10, GitHub Actions and Docker Compose for local PostgreSQL 17. The backend is organised by functional modules and vertical slices, with Clean/Hexagonal boundaries inside each module where they protect real dependencies.
 
 CQRS means commands and queries have distinct use cases and models. It does not require MediatR or a class per line of code.
 
@@ -62,7 +62,7 @@ The `ai/` workbench is not an application runtime boundary by default and is not
 ## Block 00 scaffold decisions
 
 - Frontend package manager: pnpm, with committed lockfile once scaffolded.
-- Node runtime: Node 22 LTS.
+- Node runtime: Node 24.15+.
 - Backend runtime: .NET 10 / ASP.NET Core 10.
 - Styling: Tailwind is part of the block 00 frontend scaffold and must map to the durable tokens in `DESIGN.md`.
 - CI: GitHub Actions.
@@ -95,6 +95,7 @@ Query   → Handler → Read model / projection
 ## Angular rules
 
 - Standalone components and lazy feature routes.
+- Keep Angular artifact suffixes (`*.component.*`, `*.service.ts`, etc.) as configured in `apps/web/angular.json`; see `docs/conventions/angular.md`.
 - Signals for local synchronous state; `computed` for derived state.
 - `resource`/`httpResource` for remote state when the API and lifecycle fit.
 - Zoneless change detection and `OnPush`-compatible patterns.
