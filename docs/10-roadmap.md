@@ -25,12 +25,26 @@ Accepted: personal single-operator use, multiple isolated campaigns, no multiuse
 | 03 | AI ports and deterministic fake / 01 | NaN adapter/model settings, dimensions, limits, failure policy in 05/09 | Fake verifies orchestration; configured adapter compatibility checked before live use |
 | 04A | Sources: Markdown/text and pasted text / 03 | Upload/review limits, canonical schema, knowledge status, chunking, progress/retry, identity/version publication, removal and private-data policy in 02/03/05/06/07/12 | Supported inputs available per campaign; partial failure/update/isolation verified; initial eval fixtures ready |
 | 04B | Notion ingestion / 04A | Root/credentials, traversal, supported blocks, sync and remote deletion in 03/05/06/07/12 | Notion uses the same canonical pipeline and source lifecycle; campaign isolation verified |
-| 05 | FTS + vector retrieval / 04B | FTS language, vector/index configuration and candidate limits; initial eval dataset exists | Separate lexical/vector baselines recorded; no campaign leakage |
-| 06 | Fusion and grounded answer / 05 | RRF/reranker decision, budgets, citations, contradictions, insufficient evidence, transport and generation criteria in 02/05/06 | Answers trace to campaign evidence; comparison against baselines recorded |
-| 07 | Regression gates / 06 | Measured thresholds/tolerances, frozen versus live eval execution in 08 | Repeatable gates with documented baseline and cost/variance policy |
-| 08 | Complete flow and deployment / 07 | Hosting, auth or private-access layer, backups, limits and rollback in 07/09 | Critical flow passes; any remote exposure passes access gate and smoke verification |
+| 05 | FTS + vector retrieval / 04B | FTS language, vector/index configuration and candidate limits; initial eval dataset exists; decide whether offline Python experiments add value for embedding/retrieval comparisons | Separate lexical/vector baselines recorded; no campaign leakage; any experimental comparison is reproducible from committed inputs |
+| 06 | Fusion and grounded answer / 05 | RRF settings, reranker decision, budgets, citations, contradictions, insufficient evidence, transport and generation criteria in 02/05/06; compare no-reranker/provider/local candidates before promoting runtime complexity | Answers trace to campaign evidence; comparison against baselines recorded; any promoted reranker has measured quality/latency/resource evidence |
+| 07 | Regression gates / 06 | Measured thresholds/tolerances, frozen versus live eval execution in 08; decide whether Langfuse or equivalent adds material value beyond OpenTelemetry | Repeatable gates with documented baseline and cost/variance policy; AI observability choice and privacy policy recorded |
+| 08 | Complete flow and deployment / 07 | Hosting, auth or private-access layer, backups, limits and rollback in 07/09; any local-model runtime must have artefact/version/fallback/runbook decisions | Critical flow passes; any remote exposure passes access gate and smoke verification; promoted AI runtime dependencies are operationally reproducible |
 
 All numbered blocks are **Not started**. Mark a block **Blocked** when readiness assessment identifies an unresolved required decision; document the exact condition below.
+
+## AI engineering extension rule
+
+Lorekeeper may use a small Python workbench (`uv`, Pydantic, pytest) and model-ecosystem libraries such as Hugging Face, SentenceTransformers and PyTorch for offline evaluation, reranking or inference experiments. These are not baseline product dependencies.
+
+Adopt them incrementally:
+
+1. start from the committed retrieval/eval corpus;
+2. use Python only where the ecosystem materially improves experimentation or analysis;
+3. compare candidate model behaviour against the simpler .NET/provider baseline;
+4. promote a local model/runtime dependency only when measured quality gains justify latency, resource and delivery costs;
+5. require an ADR before introducing a separately deployed Python/model service.
+
+OpenTelemetry remains the default system-wide observability stack. Langfuse or another AI-specific platform may be added when prompt/model/retrieval inspection and eval workflows justify a second telemetry system, with explicit privacy and retention rules.
 
 ## Readiness record (required per block)
 
@@ -46,6 +60,7 @@ All numbered blocks are **Not started**. Mark a block **Blocked** when readiness
 - Campaign boundaries are enforced from the first persistence slice onward.
 - Preparation, actual events and player knowledge must be modelled before ingestion; a DM note is not proof of player discovery.
 - Evaluation starts before retrieval implementation; block 07 formalises gates.
+- AI/model tooling does not enter the production runtime solely for portfolio value; the committed evaluation corpus must justify the added dependency.
 - Each PR identifies its block, specification and acceptance evidence. No feature may rely on a placeholder as an approved decision.
 
 ## First UX approach: sequencing clarification
