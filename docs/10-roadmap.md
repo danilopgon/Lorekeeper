@@ -8,13 +8,15 @@ Apply the blocking Definition of Ready in `08-quality-strategy.md` before every 
 
 ## Current block
 
-**Definition — product and first-slice specification**  
-**Status:** Done  
-**Outcome:** an implementable first slice with explicit scope and acceptance criteria.
+**00 — Skeleton and CI**
+**Status:** Ready / Not started
+**Outcome:** repository scaffold, executable local commands and CI gates for the first implementation slice.
 
-Accepted: personal single-operator use, multiple isolated campaigns, no multiuser scaffolding, access control required before Internet exposure. First slice: campaign creation/selection plus empty campaign workspace shell with Chat and Sources routes, without ingestion or AI. Minimal campaign fields are `id`, `name`, `createdAt` and `updatedAt`; `name` is required, trimmed, 1–120 characters and unique case-insensitively. Active campaign is represented in the URL: `/campaigns`, `/campaigns/{campaignId}/chat`, `/campaigns/{campaignId}/sources`. Campaign deletion is excluded from the first slice.
+Definition remains Done: personal single-operator use, multiple isolated campaigns, no multiuser scaffolding, access control required before Internet exposure. First slice: campaign creation/selection plus empty campaign workspace shell with Chat and Sources routes, without ingestion or AI. Minimal campaign fields are `id`, `name`, `createdAt` and `updatedAt`; `name` is required, trimmed, 1–120 characters and unique case-insensitively. Active campaign is represented in the URL: `/campaigns`, `/campaigns/{campaignId}/chat`, `/campaigns/{campaignId}/sources`. Campaign deletion is excluded from the first slice.
 
-Next block: 00 — Skeleton and CI. It remains Not started until runtime/package versions, package manager, project layout, real commands and CI/tooling choices are specified.
+Block 00 readiness decisions are recorded in `04`, `08` and `09`: pnpm, Node 22 LTS, .NET 10, Angular 22, Tailwind aligned to `DESIGN.md`, GitHub Actions, Docker Compose PostgreSQL 17, Playwright E2E in `apps/web/e2e`, and Conventional Commits enforced through CI plus local hooks. Python/AI evaluation workbench remains planned for later and is not an active block 00 dependency or check.
+
+Remaining blocker before scaffold implementation: none identified from the block 00 decision set. Commands are still planned, not verified, until scaffold files exist and checks run.
 
 ## Blocks and gates
 
@@ -32,7 +34,7 @@ Next block: 00 — Skeleton and CI. It remains Not started until runtime/package
 | 07 | Regression gates / 06 | Measured thresholds/tolerances, frozen versus live eval execution in 08; decide whether Langfuse or equivalent adds material value beyond OpenTelemetry | Repeatable gates with documented baseline and cost/variance policy; AI observability choice and privacy policy recorded |
 | 08 | Complete flow and deployment / 07 | Hosting, auth or private-access layer, backups, limits and rollback in 07/09; any local-model runtime must have artefact/version/fallback/runbook decisions | Critical flow passes; any remote exposure passes access gate and smoke verification; promoted AI runtime dependencies are operationally reproducible |
 
-All numbered blocks are **Not started**. Mark a block **Blocked** when readiness assessment identifies an unresolved required decision; document the exact condition below.
+Block 00 is **Ready / Not started**. Blocks 01–08 are **Not started**. Mark a block **Blocked** when readiness assessment identifies an unresolved required decision; document the exact condition below.
 
 ## AI engineering extension rule
 
@@ -52,9 +54,15 @@ OpenTelemetry remains the default system-wide observability stack. Langfuse or a
 
 - Block and status: Definition — Done.
 - Entry decisions and links to resolved specifications: first implementation slice is campaign creation/selection plus empty Chat and Sources workspace shell (`PRODUCT`, `00`, `02`); Campaign fields and invariants are defined (`03`); first-slice campaign endpoints, DTOs and error mapping are defined (`06`); delete campaign, ingestion and AI are excluded from the slice (`PRODUCT`, `00`, `02`, `03`, `06`).
-- Remaining blocker, target document and unblock condition: no Definition blocker remains. Block 00 must still define runtime/package versions, package manager, module/project layout, one E2E location, real commands and CI tools in `04`, `08` and `09` before scaffold implementation.
+- Remaining blocker, target document and unblock condition: no Definition blocker remains.
 - Acceptance criteria and verification plan: US-01 in `02` defines creation, validation, URL campaign selection, Chat/Sources shells and excluded behaviours; verification covers domain/unit validation, backend integration, frontend route/component states and one E2E smoke test.
-- Exit evidence and remaining limitations: Documentation-only definition update; no scaffold, code, tests, generated client or implementation evidence exists yet. Numbered implementation blocks remain Not started.
+- Exit evidence and remaining limitations: Documentation-only definition update; no scaffold, code, tests, generated client or implementation evidence exists yet.
+
+- Block and status: 00 — Ready / Not started.
+- Entry decisions and links to resolved specifications: pnpm, Node 22 LTS, .NET 10, Tailwind, GitHub Actions, Docker Compose PostgreSQL 17, initial Playwright E2E location `apps/web/e2e`, Conventional Commits enforcement, and inactive Python/AI workbench are recorded in `04`, `08` and `09`.
+- Remaining blocker, target document and unblock condition: none identified before scaffold implementation. Internet exposure remains gated by `07`/`09`, but it does not block local scaffold work.
+- Acceptance criteria and verification plan: scaffold must create real frontend/backend/local database/CI command surfaces and then replace planned command references with verified commands; applicable checks must run and AGENTS commands must be updated from planned to verified.
+- Exit evidence and remaining limitations: Documentation-only readiness update; no scaffold, CI workflow, lockfile, hooks or executable verification exists yet.
 
 ## Cross-cutting gates
 

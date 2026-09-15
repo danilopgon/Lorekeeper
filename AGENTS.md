@@ -18,9 +18,9 @@ The GM retains control over campaign canon; retrieved preparation is not automat
 
 | Layer | Technology |
 | --- | --- |
-| Frontend | Angular 22, TypeScript, standalone APIs, signals, zoneless |
-| Backend | ASP.NET Core, C#, vertical slices, pragmatic CQRS |
-| Database | PostgreSQL, EF Core, pgvector where semantic retrieval is required |
+| Frontend | Angular 22, TypeScript, standalone APIs, signals, zoneless, Tailwind |
+| Backend | ASP.NET Core/.NET 10, C#, vertical slices, pragmatic CQRS |
+| Database | PostgreSQL 17, EF Core, pgvector where semantic retrieval is required |
 | AI | Microsoft.Extensions.AI behind project-owned ports; OpenAI-compatible providers |
 | Contracts | OpenAPI with a generated TypeScript client |
 | Frontend QA | Vitest, Angular Testing Library, Playwright |
@@ -48,16 +48,16 @@ Lorekeeper/
 
 | Command | What it does |
 | --- | --- |
-| `npm ci` | Install frontend dependencies from the lockfile |
-| `npm run start` | Start Angular locally |
-| `npm run build` | Build the Angular application |
-| `npm run lint` | Run Angular ESLint |
-| `npm run test` | Run frontend unit/component tests with Vitest |
-| `npm run e2e` | Run Playwright end-to-end tests |
-| `dotnet restore` | Restore backend dependencies |
-| `dotnet build --no-restore` | Build .NET with analyzers |
-| `dotnet test --no-build` | Run .NET unit and integration tests |
-| `dotnet format --verify-no-changes` | Verify .NET formatting |
+| `pnpm install --frozen-lockfile` | Install frontend dependencies from the lockfile once scaffolded |
+| `pnpm run start` | Start Angular locally once scaffolded |
+| `pnpm run build` | Build the Angular application once scaffolded |
+| `pnpm run lint` | Run Angular ESLint once scaffolded |
+| `pnpm run test` | Run frontend unit/component tests with Vitest once scaffolded |
+| `pnpm run e2e` | Run Playwright end-to-end tests once scaffolded |
+| `dotnet restore` | Restore backend dependencies once scaffolded |
+| `dotnet build --no-restore` | Build .NET with analyzers once scaffolded |
+| `dotnet test --no-build` | Run .NET unit and integration tests once scaffolded |
+| `dotnet format --verify-no-changes` | Verify .NET formatting once scaffolded |
 
 ---
 
@@ -150,7 +150,7 @@ Before starting any implementation block, apply the Definition of Ready in `docs
 
 The current release is a personal, single-operator installation supporting multiple campaigns. All campaign data and retrieval are explicitly scoped by `campaignId`. This is data isolation, not authentication. Do not scaffold accounts, teams, invitations or multiuser permissions. Local development may proceed without application login; exposing UI or API on the Internet is blocked until application authentication or private-access enforcement is selected and verified. See `docs/07-data-security-and-rls.md`.
 
-Command tables describe the planned scaffold until block 00 establishes and verifies executable commands. A placeholder never counts as a completed specification.
+Command tables describe the planned scaffold until block 00 establishes and verifies executable commands. A placeholder never counts as a completed specification. Conventional Commits are expected once scaffolded, enforced by CI plus local hooks.
 
 ## Workspace and ingestion routing
 

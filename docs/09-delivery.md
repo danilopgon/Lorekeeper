@@ -4,11 +4,13 @@
 
 | Environment | Purpose | Data policy |
 | --- | --- | --- |
-| Local | Development and automated integration tests | Seeded/non-sensitive |
+| Local | Development and automated integration tests with Docker Compose PostgreSQL 17 | Seeded/non-sensitive |
 | Staging | Contract, migration and smoke validation | Synthetic or protected |
 | Production | Real users | Least privilege and audited access |
 
 ## Configuration
+
+Block 00 local development choices are pnpm, Node 22 LTS, .NET 10 and Docker Compose PostgreSQL 17. The local application remains local-only with no application login; Internet exposure is blocked until the access gate below is resolved. Python is not part of the block 00 runtime or delivery baseline.
 
 Document variable names and purpose in `.env.example` or platform configuration. Never commit real values.
 
@@ -34,12 +36,14 @@ A separate Python/model service is not part of the baseline. Add one only when a
 
 ## Pipeline
 
+CI runs on GitHub Actions. The block 00 scaffold should establish pnpm frontend installation, .NET 10 backend restore/build/test, and local database expectations around Docker Compose PostgreSQL 17.
+
 1. Restore/install from lockfiles.
 2. Run format, lint, typecheck, build and unit tests.
 3. Generate OpenAPI and verify the TypeScript client.
 4. Run integration tests against Testcontainers.
-5. Run deterministic AI evals and critical Playwright flows.
-6. Run applicable reproducible AI-workbench checks if that tooling exists and owns a changed capability.
+5. Run deterministic AI evals when introduced and critical Playwright flows from `apps/web/e2e`.
+6. Run applicable reproducible AI-workbench checks only after that tooling exists and owns a changed capability.
 7. Build immutable frontend/backend artifacts.
 8. Apply forward-compatible migrations.
 9. Deploy, verify health/readiness and execute smoke tests.
@@ -92,6 +96,6 @@ For AI changes, rollback must include model/provider configuration and any reran
 
 ## Initial personal deployment and readiness
 
-The initial installation serves one operator and several campaigns. Local-only development is permitted without application login. Hosting and application-auth versus external private-access enforcement remain **Open**; they must be settled before Internet exposure, even if a preview is attempted before block 08.
+The initial installation serves one operator and several campaigns. Local-only development is permitted without application login. Block 00 does not scaffold accounts, teams, invitations or a Python runtime. Hosting and application-auth versus external private-access enforcement remain **Open**; they must be settled before Internet exposure, even if a preview is attempted before block 08.
 
 Record chosen host, network/origin restrictions, access mechanism, secrets, storage/backups and authorised/unauthorised smoke evidence here and in an ADR. Protect both frontend and API, including direct-origin paths. Until verified, keep the deployment local-only. This deployment gate does not block local product development.

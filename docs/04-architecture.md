@@ -2,7 +2,7 @@
 
 ## Architectural style
 
-The baseline is an **Angular 22 frontend** backed by an **ASP.NET Core modular monolith**. The backend is organised by functional modules and vertical slices, with Clean/Hexagonal boundaries inside each module where they protect real dependencies.
+The baseline is an **Angular 22 frontend** backed by an **ASP.NET Core modular monolith**. The block 00 scaffold targets pnpm, Node 22 LTS, .NET 10, GitHub Actions and Docker Compose for local PostgreSQL 17. The backend is organised by functional modules and vertical slices, with Clean/Hexagonal boundaries inside each module where they protect real dependencies.
 
 CQRS means commands and queries have distinct use cases and models. It does not require MediatR or a class per line of code.
 
@@ -29,7 +29,7 @@ apps/web/
 │   ├── core/                 # app-wide infrastructure
 │   ├── shared/               # proven reusable UI primitives
 │   └── features/             # product capabilities
-└── e2e/
+└── e2e/                      # initial Playwright E2E location
 
 services/api/
 ├── src/
@@ -46,9 +46,9 @@ services/api/
     ├── Unit/
     └── Integration/
 
-ai/                           # optional offline AI engineering workbench
-├── experiments/              # retrieval/model comparisons and benchmarks
-├── tools/                    # dataset and analysis utilities
+ai/                           # deferred optional offline AI engineering workbench; not active in block 00
+├── experiments/              # retrieval/model comparisons and benchmarks when introduced
+├── tools/                    # dataset and analysis utilities when introduced
 └── tests/                    # Python-only tooling tests when needed
 
 tests/
@@ -57,7 +57,19 @@ tests/
 └── evals/
 ```
 
-The `ai/` workbench is not an application runtime boundary by default. Product orchestration, retrieval policy and production contracts remain owned by the ASP.NET Core application. Introduce a separately deployed Python/model service only after a measured need and an ADR justify the operational boundary.
+The `ai/` workbench is not an application runtime boundary by default and is not an active block 00 scaffold dependency or check. Add it later only when a corpus/evaluation need exists. Product orchestration, retrieval policy and production contracts remain owned by the ASP.NET Core application. Introduce a separately deployed Python/model service only after a measured need and an ADR justify the operational boundary.
+
+## Block 00 scaffold decisions
+
+- Frontend package manager: pnpm, with committed lockfile once scaffolded.
+- Node runtime: Node 22 LTS.
+- Backend runtime: .NET 10 / ASP.NET Core 10.
+- Styling: Tailwind is part of the block 00 frontend scaffold and must map to the durable tokens in `DESIGN.md`.
+- CI: GitHub Actions.
+- Local database: Docker Compose running PostgreSQL 17; pgvector remains required where semantic retrieval needs it in later blocks.
+- Initial E2E location: `apps/web/e2e` for Playwright.
+- Commit policy: Conventional Commits enforced by CI plus local hooks using commitlint and Husky/lint-staged or equivalent JavaScript tooling once scaffolded.
+- Python/AI evaluation workbench: planned for a later roadmap block when corpus/eval needs exist; not an active block 00 runtime, dependency or CI check.
 
 ## Backend module rules
 

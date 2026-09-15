@@ -10,6 +10,20 @@
 - Update or supersede stale statements. Do not leave contradictory directions active.
 - Do not duplicate a rule across files; link to its source of truth.
 
+## Evolving conventions
+
+- Add a convention when the same ambiguity appears more than once or when a tooling decision needs a durable rule for future agents.
+- Record conventions in `docs/conventions/` when they are repository-wide, in the owning topic document when they are scoped, or in an ADR when they change architecture, contracts, providers, ownership or delivery boundaries.
+- Update conventions in the same change that introduces or enforces the practice; do not rely on chat context or commit history as the only source of truth.
+- If a convention is planned but not yet enforced, state the enforcement point and avoid claiming it is verified.
+
+## Commit conventions
+
+- Use Conventional Commits after block 00 scaffold introduces enforcement: `type(scope): subject`.
+- Initial types: `feat`, `fix`, `docs`, `test`, `refactor`, `build`, `ci`, `chore`.
+- Initial scopes: `docs`, `web`, `api`, `contracts`, `e2e`, `repo`.
+- CI and local hooks are the enforcement point once scaffolded; commits before that point may not follow the convention.
+
 ## Code comments
 
 Default to no comment. Prefer a better name, smaller function, typed boundary or descriptive test.

@@ -20,6 +20,8 @@ Test behaviour at the cheapest layer that provides confidence. Most tests live b
 
 ### Angular 22
 
+- pnpm as the frontend package manager under Node 22 LTS.
+- Tailwind from block 00, aligned to the durable tokens and visual direction in `DESIGN.md`.
 - Vitest as the test runner.
 - Angular Testing Library for behaviour-first component tests.
 - Playwright for E2E and accessibility smoke checks.
@@ -28,6 +30,7 @@ Test behaviour at the cheapest layer that provides confidence. Most tests live b
 
 ### ASP.NET Core
 
+- .NET 10 as the backend runtime target from block 00.
 - xUnit for unit and integration suites.
 - FluentAssertions for readable outcomes.
 - NSubstitute only at real ports; do not mock domain objects or EF queries.
@@ -37,7 +40,7 @@ Test behaviour at the cheapest layer that provides confidence. Most tests live b
 
 ### AI experimentation
 
-Production regression gates should remain runnable from committed repository tooling and fixtures. Python may be introduced under `ai/` for model-ecosystem experiments, analysis or benchmark utilities when it provides concrete value.
+Production regression gates should remain runnable from committed repository tooling and fixtures. Python may be introduced under `ai/` for model-ecosystem experiments, analysis or benchmark utilities when it provides concrete value. It is not an active block 00 scaffold dependency, runtime or CI check.
 
 If Python tooling is introduced:
 
@@ -50,6 +53,9 @@ If Python tooling is introduced:
 
 ### System quality
 
+- GitHub Actions as the CI platform.
+- Conventional Commits enforced in CI and locally once scaffolded, using commitlint plus Husky/lint-staged or equivalent JavaScript tooling.
+- Docker Compose PostgreSQL 17 for local development; Testcontainers should match required PostgreSQL extensions for automated integration tests.
 - OpenAPI generation and breaking-change detection.
 - Dependabot/Renovate or equivalent dependency updates.
 - Dependency and container vulnerability scanning in CI.
@@ -100,11 +106,11 @@ For reranking, compare relevant alternatives on the same corpus: lexical, vector
 
 ```text
 Frontend:
-npm ci
-npm run format:check
-npm run lint
-npm run test -- --run
-npm run build
+pnpm install --frozen-lockfile
+pnpm run format:check
+pnpm run lint
+pnpm run test -- --run
+pnpm run build
 
 Backend:
 dotnet restore
@@ -113,18 +119,21 @@ dotnet build --no-restore
 dotnet test --no-build
 
 System:
+GitHub Actions workflow gates
+Conventional Commit check
 OpenAPI generation + diff
 integration tests with Testcontainers
-deterministic retrieval evals
-Playwright critical-path suite
+Docker Compose PostgreSQL 17 local development check when applicable
+deterministic retrieval evals when introduced
+Playwright critical-path suite from apps/web/e2e
 
-Optional AI workbench, when present and relevant:
+Optional AI workbench, only after a later block introduces it:
 uv sync --frozen
 uv run pytest
 [reproducible benchmark/eval command]
 ```
 
-Adapt script names to the repository, then replace this block. Do not leave fictional commands in an active project. Do not make optional Python checks blocking until the workbench exists and the owning block defines which checks are required.
+Adapt script names to the repository during scaffold, then replace this block with verified commands. Do not leave fictional commands in an active project. Do not make optional Python checks blocking until the workbench exists and the owning block defines which checks are required.
 
 ## Definition of Done
 
